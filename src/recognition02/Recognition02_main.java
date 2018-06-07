@@ -17,7 +17,9 @@ public class Recognition02_main {
 	public static void main(String args[]){
 
 		VisualRecognition service = new VisualRecognition("2018-03-19");
-		service.setApiKey("j16004");
+		service.setApiKey("4f771d96592f197797ac81dc10e3ab1e678d0ebf");
+
+		MySQL mysql = new MySQL();
 
 		InputStream imagesStream = null;
 		try {
@@ -43,24 +45,25 @@ public class Recognition02_main {
 		try {
 			node = mapper.readTree(s);
 
-			String class_0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("class").asText();
+			String class_0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("class").toString();
 			System.out.println("class_0 : " + class_0);
 
-			float class_0_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("score").floatValue();
+			double class_0_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("score").asDouble();
 			System.out.println("class_0_s : " + class_0_s);
 
-			String class_1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("class").asText();
+			String class_1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("class").toString();
 			System.out.println("class_1 : " +class_1);
 
-			float class_1_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("score").floatValue();
+			double class_1_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("score").asDouble();
 			System.out.println("class_1_s : " + class_1_s);
 
-			String class_2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("class").asText();
+			String class_2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("class").toString();
 			System.out.println("class_2 : " + class_2);
 
-			float class_2_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("score").floatValue();
+			double class_2_s = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("score").asDouble();
 			System.out.println("class_2_s : " + class_2_s);
 
+			mysql.updateImage(class_0, class_0_s, class_1, class_1_s, class_2, class_2_s);
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
